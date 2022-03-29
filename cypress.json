@@ -1,5 +1,12 @@
 {
+    "baseUrl": "https://webdriveruniversity.com",
     "viewportHeight": 1080,
     "viewportWidth": 1920,
-    "chromeWebSecurity": false
+    "chromeWebSecurity": false,
+    "defaultCommandTimeout": 10000,
+    "ignoreTestFiles": "**//other/*",
+    "env": {
+        "webdriveruni_homepage": "https://webdriveruniversity.com",
+        "first_name": "sarah"
+    }
 }

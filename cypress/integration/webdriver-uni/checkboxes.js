@@ -1,10 +1,11 @@
 /// <reference types="Cypress" />
 
 describe("Verify checkboxes via webdriveruni", () => {
+    beforeEach(function() {
+        cy.navigateTo_WebdriverUni__Checkbox_Page();
+    })
     it("Check and validate checkbox", () => {
         // cy.visit("https://webdriveruniversity.com/Contact-Us/contactus.html")
-        cy.visit("https://webdriveruniversity.com")
-        cy.get("#dropdown-checkboxes-radiobuttons").invoke('removeAttr', 'target').click({ force: true })
         // cy.get('#checkboxes > :nth-child(1) > input').check()
         // cy.get('#checkboxes > :nth-child(1) > input').check().should('be.checked')
 
@@ -14,8 +15,6 @@ describe("Verify checkboxes via webdriveruni", () => {
     })
 
     it("Uncheck Option 3 and validate it is unchecked", () => {
-        cy.visit("https://webdriveruniversity.com")
-        cy.get("#dropdown-checkboxes-radiobuttons").invoke('removeAttr', 'target').click({ force: true })
         // cy.get('#checkboxes > :nth-child(1) > input').check()
         // cy.get('#checkboxes > :nth-child(1) > input').check().should('be.checked')
 
@@ -23,10 +22,7 @@ describe("Verify checkboxes via webdriveruni", () => {
         cy.get('@option-3').uncheck().should('not.be.checked')
     })
 
-    it("Check multiple checkboxes", () => {
-        cy.visit("https://webdriveruniversity.com")
-        cy.get("#dropdown-checkboxes-radiobuttons").invoke('removeAttr', 'target').click({ force: true })
-        
+    it("Check multiple checkboxes", () => {        
         cy.get('input[type="checkbox"]').check(["option-1", "option-2", "option-3", "option-4"])
     })
 })
