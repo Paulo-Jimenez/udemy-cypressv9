@@ -1,0 +1,1250 @@
+{
+  "stats": {
+    "suites": 17,
+    "tests": 27,
+    "passes": 18,
+    "pending": 0,
+    "failures": 6,
+    "start": "2022-04-25T12:32:32.104Z",
+    "end": "2022-04-25T12:38:55.901Z",
+    "duration": 284334,
+    "testsRegistered": 27,
+    "passPercent": 66.66666666666667,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 3,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "bc28edd0-4d2e-4caa-b353-e960be95ebb4",
+      "title": "",
+      "fullFile": "cypress/integration/automation-test-store/alias-invoke.js",
+      "file": "cypress/integration/automation-test-store/alias-invoke.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "82d7266f-8398-4f42-9b6e-2b4dfd796eb0",
+          "title": "Alias and invoke",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Calculate total of normal and sale products",
+              "fullTitle": "Alias and invoke Calculate total of normal and sale products",
+              "timedOut": null,
+              "duration": 26597,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit(\"https://automationteststore.com/\");\ncy.get('.thumbnail').as('productThumbnail'); // cy.get('@productThumbnail').find('.oneprice').each(($el, index, $list) => {\n//     cy.log($el.text())\n// })\ncy.get('.thumbnail').find('.oneprice').invoke('text').as('itemPrice');\ncy.get('.thumbnail').find('.pricenew').invoke('text').as('saleItemPrice');\nvar itemsTotal = 0;\ncy.get('@itemPrice').then($linkText => {\n  var itemsPriceTotal = 0;\n  var itemPrice = $linkText.split('$');\n  var i;\n  for (i = 0; i < itemPrice.length; i++) {\n    cy.log(itemPrice[i]);\n    itemsPriceTotal += Number(itemPrice[i]);\n  }\n  itemsTotal += itemsPriceTotal;\n  cy.log(\"Non sale price items total: \" + itemsPriceTotal);\n});\ncy.get('@saleItemPrice').then($linkText => {\n  var saleItemsPrice = 0;\n  var saleItemPrice = $linkText.split('$');\n  var i;\n  for (i = 0; i < saleItemPrice.length; i++) {\n    cy.log(saleItemPrice[i]);\n    saleItemsPrice += Number(saleItemPrice[i]);\n  }\n  itemsTotal += saleItemsPrice;\n  cy.log(\"Sale price items total: \" + saleItemsPrice);\n}).then(() => {\n  cy.log(\"The total price of all products: \" + itemsTotal);\n  expect(itemsTotal).to.equal(648.5);\n});",
+              "err": {},
+              "uuid": "0f83354e-735a-443e-ae17-7b5c2671c841",
+              "parentUUID": "82d7266f-8398-4f42-9b6e-2b4dfd796eb0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "0f83354e-735a-443e-ae17-7b5c2671c841"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 26597,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "8b881d26-f175-4327-a847-d1e271407669",
+      "title": "",
+      "fullFile": "cypress/integration/automation-test-store/contact-us.js",
+      "file": "cypress/integration/automation-test-store/contact-us.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7a9225a7-5221-42f2-8435-b974d15532c4",
+          "title": "Test Contact Us form via Automation Test Store",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should be able to submit a successful submission via contact us form",
+              "fullTitle": "Test Contact Us form via Automation Test Store Should be able to submit a successful submission via contact us form",
+              "timedOut": null,
+              "duration": 30188,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit(\"https://automationteststore.com/\");\ncy.get('a[href$=\"contact\"]').click().then(function (contactUsText) {\n  console.log(\"Selected the following item:\" + contactUsText.text());\n}); // cy.xpath('//a[contains(@href, \"contact\")]').click();\ncy.get('@user').then(user => {\n  cy.get('#ContactUsFrm_first_name').type(user.first_name);\n  cy.get('#ContactUsFrm_email').type(user.email);\n});\ncy.get('#ContactUsFrm_email').should('have.attr', 'name', 'email');\ncy.get('#ContactUsFrm_enquiry').type(\"Do you provide additional discount on bulk orders?\");\ncy.get('button[title=\"Submit\"]').click();\ncy.get('.mb40 > :nth-child(3)').should('have.text', 'Your enquiry has been successfully sent to the store owner!');\ncy.log(\"Test has completed!\");",
+              "err": {
+                "message": "CypressError: Timed out after waiting `30000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `30000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.",
+                "estack": "CypressError: Timed out after waiting `30000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `30000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.\n    at timedOutWaitingForPageLoad (https://automationteststore.com/__cypress/runner/cypress_runner.js:158276:72)\n    at https://automationteststore.com/__cypress/runner/cypress_runner.js:159329:16\n    at tryCatcher (https://automationteststore.com/__cypress/runner/cypress_runner.js:13022:23)\n    at https://automationteststore.com/__cypress/runner/cypress_runner.js:8144:41\n    at tryCatcher (https://automationteststore.com/__cypress/runner/cypress_runner.js:13022:23)\n    at Promise._settlePromiseFromHandler (https://automationteststore.com/__cypress/runner/cypress_runner.js:10957:31)\n    at Promise._settlePromise (https://automationteststore.com/__cypress/runner/cypress_runner.js:11014:18)\n    at Promise._settlePromise0 (https://automationteststore.com/__cypress/runner/cypress_runner.js:11059:10)\n    at Promise._settlePromises (https://automationteststore.com/__cypress/runner/cypress_runner.js:11135:18)\n    at _drainQueueStep (https://automationteststore.com/__cypress/runner/cypress_runner.js:7729:12)\n    at _drainQueue (https://automationteststore.com/__cypress/runner/cypress_runner.js:7722:9)\n    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (https://automationteststore.com/__cypress/runner/cypress_runner.js:7738:5)\n    at Async.drainQueues (https://automationteststore.com/__cypress/runner/cypress_runner.js:7608:14)\nFrom Your Spec Code:\n    at Context.eval (https://automationteststore.com/__cypress/tests?p=cypress\\integration\\automation-test-store\\contact-us.js:106:8)",
+                "diff": null
+              },
+              "uuid": "8f409f6d-31cd-459c-b112-2eedf0d1317e",
+              "parentUUID": "7a9225a7-5221-42f2-8435-b974d15532c4",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "8f409f6d-31cd-459c-b112-2eedf0d1317e"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 30188,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "d5312a80-1c56-4d72-93c3-f4a3b91f3f4e",
+      "title": "",
+      "fullFile": "cypress/integration/automation-test-store/inspect-item.js",
+      "file": "cypress/integration/automation-test-store/inspect-item.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "2f03192a-bb4a-43b2-a94d-53fd75eb0c97",
+          "title": "Inspect Automation Test Store items using chain of commands",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Click on first item using item text",
+              "fullTitle": "Inspect Automation Test Store items using chain of commands Click on first item using item text",
+              "timedOut": null,
+              "duration": 30170,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit(\"https://automationteststore.com/\");\ncy.get('.prdocutname').contains('Skinsheen Bronzer Stick').click().then(function (itemHeaderText) {\n  console.log(\"Selected the following item: \" + itemHeaderText.text());\n});",
+              "err": {
+                "message": "CypressError: Timed out after waiting `30000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `30000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.",
+                "estack": "CypressError: Timed out after waiting `30000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `30000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.\n    at timedOutWaitingForPageLoad (https://automationteststore.com/__cypress/runner/cypress_runner.js:158276:72)\n    at https://automationteststore.com/__cypress/runner/cypress_runner.js:159329:16\n    at tryCatcher (https://automationteststore.com/__cypress/runner/cypress_runner.js:13022:23)\n    at https://automationteststore.com/__cypress/runner/cypress_runner.js:8144:41\n    at tryCatcher (https://automationteststore.com/__cypress/runner/cypress_runner.js:13022:23)\n    at Promise._settlePromiseFromHandler (https://automationteststore.com/__cypress/runner/cypress_runner.js:10957:31)\n    at Promise._settlePromise (https://automationteststore.com/__cypress/runner/cypress_runner.js:11014:18)\n    at Promise._settlePromise0 (https://automationteststore.com/__cypress/runner/cypress_runner.js:11059:10)\n    at Promise._settlePromises (https://automationteststore.com/__cypress/runner/cypress_runner.js:11135:18)\n    at _drainQueueStep (https://automationteststore.com/__cypress/runner/cypress_runner.js:7729:12)\n    at _drainQueue (https://automationteststore.com/__cypress/runner/cypress_runner.js:7722:9)\n    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (https://automationteststore.com/__cypress/runner/cypress_runner.js:7738:5)\n    at Async.drainQueues (https://automationteststore.com/__cypress/runner/cypress_runner.js:7608:14)\nFrom Your Spec Code:\n    at Context.eval (https://automationteststore.com/__cypress/tests?p=cypress\\integration\\automation-test-store\\inspect-item.js:106:8)",
+                "diff": null
+              },
+              "uuid": "08f479e0-4eb2-461a-9b62-a6cbe8bb1bda",
+              "parentUUID": "2f03192a-bb4a-43b2-a94d-53fd75eb0c97",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "08f479e0-4eb2-461a-9b62-a6cbe8bb1bda"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 30170,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "0de65984-32f5-471f-b4d6-35b479ece697",
+      "title": "",
+      "fullFile": "cypress/integration/automation-test-store/iterate-over-elements.js",
+      "file": "cypress/integration/automation-test-store/iterate-over-elements.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "37ccc3b4-ccc2-46c5-836c-dbc0577bd1b0",
+          "title": "Iterate over elements",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Log information of all hair care products",
+              "fullTitle": "Iterate over elements Log information of all hair care products",
+              "timedOut": null,
+              "duration": 30197,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('.fixed_wrapper .prdocutname').each(($el, index, $list) => {\n  cy.log(\"Index: \" + index + \" : \" + $el.text());\n  cy.log($list);\n});",
+              "err": {
+                "message": "CypressError: Timed out after waiting `30000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `30000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Iterate over elements`",
+                "estack": "CypressError: Timed out after waiting `30000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `30000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Iterate over elements`\n    at timedOutWaitingForPageLoad (https://automationteststore.com/__cypress/runner/cypress_runner.js:158276:72)\n    at https://automationteststore.com/__cypress/runner/cypress_runner.js:159329:16\n    at tryCatcher (https://automationteststore.com/__cypress/runner/cypress_runner.js:13022:23)\n    at https://automationteststore.com/__cypress/runner/cypress_runner.js:8144:41\n    at tryCatcher (https://automationteststore.com/__cypress/runner/cypress_runner.js:13022:23)\n    at Promise._settlePromiseFromHandler (https://automationteststore.com/__cypress/runner/cypress_runner.js:10957:31)\n    at Promise._settlePromise (https://automationteststore.com/__cypress/runner/cypress_runner.js:11014:18)\n    at Promise._settlePromise0 (https://automationteststore.com/__cypress/runner/cypress_runner.js:11059:10)\n    at Promise._settlePromises (https://automationteststore.com/__cypress/runner/cypress_runner.js:11135:18)\n    at _drainQueueStep (https://automationteststore.com/__cypress/runner/cypress_runner.js:7729:12)\n    at _drainQueue (https://automationteststore.com/__cypress/runner/cypress_runner.js:7722:9)\n    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (https://automationteststore.com/__cypress/runner/cypress_runner.js:7738:5)\n    at Async.drainQueues (https://automationteststore.com/__cypress/runner/cypress_runner.js:7608:14)\nFrom Your Spec Code:\n    at Context.eval (https://automationteststore.com/__cypress/tests?p=cypress\\integration\\automation-test-store\\iterate-over-elements.js:102:8)",
+                "diff": null
+              },
+              "uuid": "e0ec6e01-563f-4064-9fc4-685e0f00c8fb",
+              "parentUUID": "37ccc3b4-ccc2-46c5-836c-dbc0577bd1b0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Add specific product to basket",
+              "fullTitle": "Iterate over elements Add specific product to basket",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.selectProduct('Eau Parfumee au The Vert Shampoo');",
+              "err": {},
+              "uuid": "fbf6859d-ec9d-4a8f-908a-b504bcf0669a",
+              "parentUUID": "37ccc3b4-ccc2-46c5-836c-dbc0577bd1b0",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "Add another specific product to basket",
+              "fullTitle": "Iterate over elements Add another specific product to basket",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.selectProduct('Seaweed Conditioner');",
+              "err": {},
+              "uuid": "4db2cfd3-c3b0-4606-ad73-fa7abbe45186",
+              "parentUUID": "37ccc3b4-ccc2-46c5-836c-dbc0577bd1b0",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "Add another specific product to basket",
+              "fullTitle": "Iterate over elements Add another specific product to basket",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.selectProduct('Pantene Pro-V Conditioner, Classic Care');",
+              "err": {},
+              "uuid": "24021b5b-2525-447a-9ccf-300e3554db56",
+              "parentUUID": "37ccc3b4-ccc2-46c5-836c-dbc0577bd1b0",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "e0ec6e01-563f-4064-9fc4-685e0f00c8fb"
+          ],
+          "pending": [],
+          "skipped": [
+            "fbf6859d-ec9d-4a8f-908a-b504bcf0669a",
+            "4db2cfd3-c3b0-4606-ad73-fa7abbe45186",
+            "24021b5b-2525-447a-9ccf-300e3554db56"
+          ],
+          "duration": 30197,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "8d8afc75-0f4d-499c-a41d-c0d9af3eada3",
+      "title": "",
+      "fullFile": "cypress/integration/automation-test-store/variables-and-cy-comands.js",
+      "file": "cypress/integration/automation-test-store/variables-and-cy-comands.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a83e6517-0789-446e-aada-66506016cd75",
+          "title": "Verifying variables, cypress commands and jquery commands",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Validate properties of the Contact Us Page",
+              "fullTitle": "Verifying variables, cypress commands and jquery commands Validate properties of the Contact Us Page",
+              "timedOut": null,
+              "duration": 21389,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit(\"https://automationteststore.com/index.php?rt=content/contact\"); //Uses cypress commands and chaining\ncy.contains('#ContactUsFrm', 'Contact Us Form').find('#field_11').should('contain', 'First name'); //JQuery approach\ncy.contains('#ContactUsFrm', 'Contact Us Form').then(text => {\n  const firstNameText = text.find('#field_11').text();\n  expect(firstNameText).to.contain('First name'); //Embedded commands (Closure)\n  cy.get('#field_11').then(fnText => {\n    cy.log(fnText.text());\n    cy.log(fnText);\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://automationteststore.com/index.php?rt=content/contact\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ETIMEDOUT 68.66.248.49:443\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://automationteststore.com/index.php?rt=content/contact\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ETIMEDOUT 68.66.248.49:443\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n    at https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:159293:82\n    at visitFailedByErr (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:158643:12)\n    at https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:159292:11\n    at tryCatcher (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:13022:23)\n    at Promise._settlePromiseFromHandler (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:10957:31)\n    at Promise._settlePromise (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:11014:18)\n    at Promise._settlePromise0 (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:11059:10)\n    at Promise._settlePromises (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:11135:18)\n    at _drainQueueStep (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7729:12)\n    at _drainQueue (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7722:9)\n    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7738:5)\n    at Async.drainQueues (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7608:14)\nFrom Your Spec Code:\n    at Context.eval (https://webdriveruniversity.com/__cypress/tests?p=cypress\\integration\\automation-test-store\\variables-and-cy-comands.js:130:8)\n\nFrom Node.js Internals:\n  Error: connect ETIMEDOUT 68.66.248.49:443\n      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1142:16)\n  ",
+                "diff": null
+              },
+              "uuid": "998b799f-e16e-4675-972f-a3566da27588",
+              "parentUUID": "a83e6517-0789-446e-aada-66506016cd75",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "998b799f-e16e-4675-972f-a3566da27588"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 21389,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "5cdc908d-9480-4748-b837-858d235ad7b9",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/autocomplete-dropdown-list.js",
+      "file": "cypress/integration/webdriver-uni/autocomplete-dropdown-list.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4e2c6e2e-295a-4061-b5be-cb2123b66952",
+          "title": "Verify Autocomplete dropdown lists via webdriveruni",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Select specific product via autocomplete list",
+              "fullTitle": "Verify Autocomplete dropdown lists via webdriveruni Select specific product via autocomplete list",
+              "timedOut": null,
+              "duration": 10737,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#autocomplete-textfield\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#myInput').type('A');\ncy.get('#myInputautocomplete-list > *').each(($el, index, $list) => {\n  const product = $el.text();\n  const productToSelect = 'Avacado';\n  if (product === productToSelect) {\n    // $el.click();\n    $el.trigger(\"click\");\n    cy.get('#submit-button').click();\n    cy.url().should('include', productToSelect);\n  }\n}).then(() => {\n  cy.get('#myInput').type('G');\n  cy.get('#myInputautocomplete-list > *').each(($el, index, $list) => {\n    const product = $el.text();\n    const productToSelect = 'Grapes';\n    if (product === productToSelect) {\n      // $el.click();\n      $el.trigger(\"click\");\n      cy.get('#submit-button').click();\n      cy.url().should('include', productToSelect);\n    }\n  });\n});",
+              "err": {},
+              "uuid": "245a9164-ee87-4213-a10d-e948d4704467",
+              "parentUUID": "4e2c6e2e-295a-4061-b5be-cb2123b66952",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "245a9164-ee87-4213-a10d-e948d4704467"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 10737,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "db792692-f8bd-4dfb-9082-604208f08a8b",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/browser-navigation.js",
+      "file": "cypress/integration/webdriver-uni/browser-navigation.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "324e6482-8452-4db0-9934-1412f385a796",
+          "title": "Validate webdriveruni homepage links",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Confirm links redirect to the correct pages",
+              "fullTitle": "Validate webdriveruni homepage links Confirm links redirect to the correct pages",
+              "timedOut": null,
+              "duration": 10125,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com/\");\ncy.get(\"#contact-us\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.url().should('include', 'contactus');\ncy.go('back');\ncy.reload();\ncy.url().should('eq', 'https://webdriveruniversity.com/'); //reload without using cache\n// cy.reload(true) \ncy.go('forward');\ncy.url().should('include', 'contactus');\ncy.go('back');\ncy.get(\"#login-portal\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.url().should('include', 'Login-Portal');\ncy.go('back');\ncy.get(\"#to-do-list\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.url().should('include', 'To-Do-List');\ncy.go('back');",
+              "err": {},
+              "uuid": "f0352186-edab-4f69-9b5d-5dc4901c8a82",
+              "parentUUID": "324e6482-8452-4db0-9934-1412f385a796",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f0352186-edab-4f69-9b5d-5dc4901c8a82"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 10125,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "c9060168-c098-4afb-9497-2da29d95667a",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/checkboxes.js",
+      "file": "cypress/integration/webdriver-uni/checkboxes.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ba818590-7010-4b59-81d4-43d37b5b3c78",
+          "title": "Verify checkboxes via webdriveruni",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Check and validate checkbox",
+              "fullTitle": "Verify checkboxes via webdriveruni Check and validate checkbox",
+              "timedOut": null,
+              "duration": 2699,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\n// cy.get('#checkboxes > :nth-child(1) > input').check()\n// cy.get('#checkboxes > :nth-child(1) > input').check().should('be.checked')\ncy.get('#checkboxes > :nth-child(1) > input').as('option-1'); // cy.get('@option-1').check()\ncy.get('@option-1').check().should('be.checked');",
+              "err": {},
+              "uuid": "3720f726-5f7c-4759-a83c-82839de5b228",
+              "parentUUID": "ba818590-7010-4b59-81d4-43d37b5b3c78",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Uncheck Option 3 and validate it is unchecked",
+              "fullTitle": "Verify checkboxes via webdriveruni Uncheck Option 3 and validate it is unchecked",
+              "timedOut": null,
+              "duration": 348,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.get('#checkboxes > :nth-child(1) > input').check()\n// cy.get('#checkboxes > :nth-child(1) > input').check().should('be.checked')\ncy.get(':nth-child(5) > input').as('option-3');\ncy.get('@option-3').uncheck().should('not.be.checked');",
+              "err": {},
+              "uuid": "2edd80d2-498c-4d05-905e-5f570d9a7dbc",
+              "parentUUID": "ba818590-7010-4b59-81d4-43d37b5b3c78",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Check multiple checkboxes",
+              "fullTitle": "Verify checkboxes via webdriveruni Check multiple checkboxes",
+              "timedOut": null,
+              "duration": 506,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('input[type=\"checkbox\"]').check([\"option-1\", \"option-2\", \"option-3\", \"option-4\"]);",
+              "err": {},
+              "uuid": "0f885c63-c42b-426e-b14e-f130989f00e8",
+              "parentUUID": "ba818590-7010-4b59-81d4-43d37b5b3c78",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "3720f726-5f7c-4759-a83c-82839de5b228",
+            "2edd80d2-498c-4d05-905e-5f570d9a7dbc",
+            "0f885c63-c42b-426e-b14e-f130989f00e8"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 3553,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "3cd4f132-0024-4a0e-84b3-0440106d05b7",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/contact-us.js",
+      "file": "cypress/integration/webdriver-uni/contact-us.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d2db9715-64cb-4241-ba63-ddf2ecf6e634",
+          "title": "Test Contact Us form via WebdriverUni",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should be able to submit a successful submission via contact us form",
+              "fullTitle": "Test Contact Us form via WebdriverUni Should be able to submit a successful submission via contact us form",
+              "timedOut": null,
+              "duration": 12247,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.document().should('have.property', 'charset').and('eq', 'UTF-8');\ncy.title().should('include', 'WebDriver | Contact Us');\ncy.url().should('include', 'contactus'); // cy.webdriverUni_ContactForm_Submission(Cypress.env(\"first_name\"), data.last_name, data.email, 'This is a comment', 'div#contact_reply > h1', 'Thank You for your Message!');\ncontact_Us_Po.contactForm_Submission(Cypress.env(\"first_name\"), data.last_name, data.email, 'This is a comment', 'div#contact_reply > h1', 'Thank You for your Message!');",
+              "err": {},
+              "uuid": "2cf7a33b-b20d-4751-b16d-84fe5383046d",
+              "parentUUID": "d2db9715-64cb-4241-ba63-ddf2ecf6e634",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should not be able to submit a successful submission via contact us form as all fields are required",
+              "fullTitle": "Test Contact Us form via WebdriverUni Should not be able to submit a successful submission via contact us form as all fields are required",
+              "timedOut": null,
+              "duration": 10260,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.webdriverUni_ContactForm_Submission(data.first_name, data.last_name, \" \", 'This is a comment', 'body', 'Error: Invalid email address');\ncontact_Us_Po.contactForm_Submission(data.first_name, data.last_name, \" \", 'This is a comment', 'body', 'Error: Invalid email address');",
+              "err": {},
+              "uuid": "c52c5058-532f-4a4c-83f3-c300eb845bcc",
+              "parentUUID": "d2db9715-64cb-4241-ba63-ddf2ecf6e634",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2cf7a33b-b20d-4751-b16d-84fe5383046d",
+            "c52c5058-532f-4a4c-83f3-c300eb845bcc"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 22507,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "503bb9bf-cbd3-4562-8168-55db047fd3ec",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/iframe.js",
+      "file": "cypress/integration/webdriver-uni/iframe.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "96d9bd19-71c9-4336-9551-7beac6bb8d2d",
+          "title": "Handling IFrame & Modals",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Handle webdriveruni iframe and modal",
+              "fullTitle": "Handling IFrame & Modals Handle webdriveruni iframe and modal",
+              "timedOut": null,
+              "duration": 5753,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#iframe\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#frame').then($iframe => {\n  const body = $iframe.contents().find('body');\n  cy.wrap(body).as('iframe');\n});\ncy.get('@iframe').find('#button-find-out-more').click();\ncy.get('@iframe').find('#myModal').as('modal');\ncy.get('@modal').should($expectedText => {\n  const text = $expectedText.text();\n  expect(text).to.include('Welcome to webdriveruniversity.com we sell a wide range of electrical goods such as laptops, game consoles, cameras...');\n});\ncy.get('@modal').contains('Close').click();",
+              "err": {},
+              "uuid": "c01f2523-bc48-40cb-8842-a5f0326ff556",
+              "parentUUID": "96d9bd19-71c9-4336-9551-7beac6bb8d2d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "c01f2523-bc48-40cb-8842-a5f0326ff556"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5753,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "588f90e5-e631-4719-ae0f-6add32cac265",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/js-alerts.js",
+      "file": "cypress/integration/webdriver-uni/js-alerts.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6e76c25c-4fc7-491d-b461-0b979276540e",
+          "title": "Handle js alerts",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Validate js confirm alert box using a stub",
+              "fullTitle": "Handle js alerts Validate js confirm alert box using a stub",
+              "timedOut": null,
+              "duration": 2804,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#popup-alerts\").invoke('removeAttr', 'target').click({\n  force: true\n});\nconst stub = cy.stub();\ncy.on('window:confirm', stub);\ncy.get('#button4').click().then(() => {\n  expect(stub.getCall(0)).to.be.calledWith('Press a button!');\n}).then(() => {\n  return true;\n}).then(() => {\n  cy.get('#confirm-alert-text').contains('You pressed OK!');\n});",
+              "err": {},
+              "uuid": "768418f6-5ede-4d83-9bbc-321a4ab56558",
+              "parentUUID": "6e76c25c-4fc7-491d-b461-0b979276540e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "768418f6-5ede-4d83-9bbc-321a4ab56558"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2804,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "8eb36756-df38-4e95-858e-882ff749c610",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/mouse-actions.js",
+      "file": "cypress/integration/webdriver-uni/mouse-actions.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d5b3f79e-0d2b-4ca8-9f8f-e0e32cb334b8",
+          "title": "Test mouse actions",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Scroll element into view",
+              "fullTitle": "Test mouse actions Scroll element into view",
+              "timedOut": null,
+              "duration": 4039,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#actions\").scrollIntoView().invoke('removeAttr', 'target').click({\n  force: true\n});",
+              "err": {},
+              "uuid": "720c2ee5-1fad-4e00-ba4e-01b83ab68735",
+              "parentUUID": "d5b3f79e-0d2b-4ca8-9f8f-e0e32cb334b8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "I should be able to drag and drop a draggable item",
+              "fullTitle": "Test mouse actions I should be able to drag and drop a draggable item",
+              "timedOut": null,
+              "duration": 1004,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#actions\").scrollIntoView().invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#draggable').trigger('mousedown', {\n  which: 1\n});\ncy.get('#droppable').trigger('mousemove').trigger('mouseup', {\n  force: true\n});",
+              "err": {},
+              "uuid": "d613956c-b8de-4f86-9d32-9103dc0a9d40",
+              "parentUUID": "d5b3f79e-0d2b-4ca8-9f8f-e0e32cb334b8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "I should be able to perform a double mouse click",
+              "fullTitle": "Test mouse actions I should be able to perform a double mouse click",
+              "timedOut": null,
+              "duration": 822,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#actions\").scrollIntoView().invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#double-click').dblclick();",
+              "err": {},
+              "uuid": "597eeacc-2918-4bb2-998b-b6cd77dc9584",
+              "parentUUID": "d5b3f79e-0d2b-4ca8-9f8f-e0e32cb334b8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "I should be able to hold down the left mouse click button on a given element",
+              "fullTitle": "Test mouse actions I should be able to hold down the left mouse click button on a given element",
+              "timedOut": null,
+              "duration": 1245,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#actions\").scrollIntoView().invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#click-box').trigger('mousedown', {\n  which: 1\n}).then($element => {\n  expect($element).to.have.css('background-color', 'rgb(0, 255, 0)');\n});",
+              "err": {},
+              "uuid": "2f15c02d-a83a-4355-887c-c4942c10f156",
+              "parentUUID": "d5b3f79e-0d2b-4ca8-9f8f-e0e32cb334b8",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "720c2ee5-1fad-4e00-ba4e-01b83ab68735",
+            "d613956c-b8de-4f86-9d32-9103dc0a9d40",
+            "597eeacc-2918-4bb2-998b-b6cd77dc9584",
+            "2f15c02d-a83a-4355-887c-c4942c10f156"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 7110,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "9c5ba1e8-590e-4e25-ace3-85d429cb68f5",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/radio-buttons.js",
+      "file": "cypress/integration/webdriver-uni/radio-buttons.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b116c63c-483b-49f2-974c-374b35017793",
+          "title": "Verify radio buttons via webdriveruni",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Check specific radio buttons",
+              "fullTitle": "Verify radio buttons via webdriveruni Check specific radio buttons",
+              "timedOut": null,
+              "duration": 5604,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#dropdown-checkboxes-radiobuttons\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#radio-buttons').find(\"[type='radio']\").first().check();\ncy.get('#radio-buttons').find(\"[type='radio']\").eq(2).check();",
+              "err": {},
+              "uuid": "b3ad18b2-c363-4871-93d7-a2ef288d02e4",
+              "parentUUID": "b116c63c-483b-49f2-974c-374b35017793",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validate the states of specific radio buttons",
+              "fullTitle": "Verify radio buttons via webdriveruni Validate the states of specific radio buttons",
+              "timedOut": null,
+              "duration": 908,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#dropdown-checkboxes-radiobuttons\").invoke('removeAttr', 'target').click({\n  force: true\n});\ncy.get('#radio-buttons-selected-disabled').find(\"[value='lettuce']\").should('not.be.checked');\ncy.get('#radio-buttons-selected-disabled').find(\"[value='pumpkin']\").should('be.checked');\ncy.get('#radio-buttons-selected-disabled').find(\"[value='lettuce']\").check();\ncy.get('#radio-buttons-selected-disabled').find(\"[value='lettuce']\").should('be.checked');\ncy.get('#radio-buttons-selected-disabled').find(\"[value='pumpkin']\").should('not.be.checked');\ncy.get('#radio-buttons-selected-disabled').find(\"[value='cabbage']\").should('be.disabled');",
+              "err": {},
+              "uuid": "d7194d7c-aac2-44ea-b378-c8841bdb5dfd",
+              "parentUUID": "b116c63c-483b-49f2-974c-374b35017793",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "b3ad18b2-c363-4871-93d7-a2ef288d02e4",
+            "d7194d7c-aac2-44ea-b378-c8841bdb5dfd"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6512,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "32b9f623-4c7d-4b50-8195-de26021a2680",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/select-dropdown-list.js",
+      "file": "cypress/integration/webdriver-uni/select-dropdown-list.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "19ee9555-cc95-43a5-9dcf-a8ab0e04fe1d",
+          "title": "Interact with dropdown lists via webdriveruni",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Select specific values via select dropdown lists",
+              "fullTitle": "Interact with dropdown lists via webdriveruni Select specific values via select dropdown lists",
+              "timedOut": null,
+              "duration": 4973,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// cy.visit(\"https://webdriveruniversity.com/Contact-Us/contactus.html\")\ncy.visit(\"https://webdriveruniversity.com\");\ncy.get(\"#dropdown-checkboxes-radiobuttons\").invoke('removeAttr', 'target').click({\n  force: true\n}); //selects an option based on value\ncy.get('#dropdowm-menu-1').select('c#');\ncy.get('#dropdowm-menu-2').select('testng').should('have.value', 'testng'); //selects an option based on text\ncy.get('#dropdowm-menu-3').select('JQuery').contains('JQuery'); //Interact with the 2nd dropdown menu\ncy.get('#dropdowm-menu-2').select('maven').should('have.value', 'maven');\ncy.get('#dropdowm-menu-2').select('TestNG').should('have.value', 'testng');",
+              "err": {},
+              "uuid": "d452a8f4-e30d-46c3-9243-cc24dd9ef959",
+              "parentUUID": "19ee9555-cc95-43a5-9dcf-a8ab0e04fe1d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d452a8f4-e30d-46c3-9243-cc24dd9ef959"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4973,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "08d533f4-8a47-49a0-a375-d1ff7f6ec5c4",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/selectors.js",
+      "file": "cypress/integration/webdriver-uni/selectors.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9b255820-156e-4c15-a5dd-37cc418ce0cd",
+          "title": "Selector examples",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Examples of Selectors via WebdriverUni Contact Us Page",
+              "fullTitle": "Selector examples Examples of Selectors via WebdriverUni Contact Us Page",
+              "timedOut": null,
+              "duration": 2899,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit(\"http://www.webdriveruniversity.com/Contact-Us/contactus.html\"); //By tag name\ncy.get(\"input\"); //By attribute name and value\ncy.get(\"input[name='first_name']\"); //By id\ncy.get(\"#contact_me\"); //By class\ncy.get(\".feedback-input\"); //By multiple classes\ncy.get(\"[class='navbar navbar-inverse navbar-fixed-top']\"); //By two different attributes\ncy.get(\"[name='email'][placeholder='Email Address']\"); //By xpath\ncy.xpath(\"//input[@name='first_name']\");",
+              "err": {},
+              "uuid": "a8ff88ca-d971-4bc6-9444-bf2b4b201572",
+              "parentUUID": "9b255820-156e-4c15-a5dd-37cc418ce0cd",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a8ff88ca-d971-4bc6-9444-bf2b4b201572"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2899,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "e77a4c35-1bfd-4b61-a5df-de56ae4e9a48",
+      "title": "",
+      "fullFile": "cypress/integration/webdriver-uni/traversing-elements.js",
+      "file": "cypress/integration/webdriver-uni/traversing-elements.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "2c16da57-1d3b-4d92-8db6-8b609e57dbca",
+          "title": "Traversing DOM elements in Cypress",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "find() to retrieve DOM elements of a given selector",
+              "fullTitle": "Traversing DOM elements in Cypress find() to retrieve DOM elements of a given selector",
+              "timedOut": null,
+              "duration": 47077,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('.traversal-pagination').find('li').find('a').should('have.length', 7);",
+              "err": {
+                "message": "Error: The following error originated from your application code, not from Cypress.\n\n  > Bootstrap's JavaScript requires jQuery\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n\nThis behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.\n\nhttps://on.cypress.io/uncaught-exception-from-application\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Traversing DOM elements in ...`",
+                "estack": "Error: The following error originated from your application code, not from Cypress.\n\n  > Bootstrap's JavaScript requires jQuery\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n\nThis behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.\n\nhttps://on.cypress.io/uncaught-exception-from-application\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Traversing DOM elements in ...`\n    at http://webdriveruniversity.com/Data-Table/js/bootstrap.js:8:9",
+                "diff": null
+              },
+              "uuid": "354605c7-e481-4963-9561-bcfa2a2b919f",
+              "parentUUID": "2c16da57-1d3b-4d92-8db6-8b609e57dbca",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "354605c7-e481-4963-9561-bcfa2a2b919f"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 47077,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "6b54a18d-7965-4b5b-8850-aad1578a06ae",
+      "title": "",
+      "fullFile": "cypress/integration/automation-test-store/add-multiple-items-to-basket.js",
+      "file": "cypress/integration/automation-test-store/add-multiple-items-to-basket.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "71860134-b3ab-466a-86ec-690f50f68390",
+          "title": "Add multiple items to basket",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Add specific items to basket",
+              "fullTitle": "Add multiple items to basket Add specific items to basket",
+              "timedOut": null,
+              "duration": 21743,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "autoStore_HairCare_PO.addHaircareProductsToBasket();",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://automationteststore.com/\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ETIMEDOUT 68.66.248.49:443\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Add multiple items to basket`",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://automationteststore.com/\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ETIMEDOUT 68.66.248.49:443\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Add multiple items to basket`\n    at https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:159293:82\n    at visitFailedByErr (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:158643:12)\n    at https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:159292:11\n    at tryCatcher (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:13022:23)\n    at Promise._settlePromiseFromHandler (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:10957:31)\n    at Promise._settlePromise (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:11014:18)\n    at Promise._settlePromise0 (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:11059:10)\n    at Promise._settlePromises (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:11135:18)\n    at _drainQueueStep (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7729:12)\n    at _drainQueue (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7722:9)\n    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7738:5)\n    at Async.drainQueues (https://webdriveruniversity.com/__cypress/runner/cypress_runner.js:7608:14)\nFrom Your Spec Code:\n    at AutoStore_Homepage_PO.accessHomepage (https://webdriveruniversity.com/__cypress/tests?p=cypress\\integration\\automation-test-store\\add-multiple-items-to-basket.js:194:8)\n    at Context.eval (https://webdriveruniversity.com/__cypress/tests?p=cypress\\integration\\automation-test-store\\add-multiple-items-to-basket.js:135:27)\n\nFrom Node.js Internals:\n  Error: connect ETIMEDOUT 68.66.248.49:443\n      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1142:16)\n  ",
+                "diff": null
+              },
+              "uuid": "51e5fb5a-fa0e-4603-a45e-028c89927772",
+              "parentUUID": "71860134-b3ab-466a-86ec-690f50f68390",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "51e5fb5a-fa0e-4603-a45e-028c89927772"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 21743,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/mochawesome",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
